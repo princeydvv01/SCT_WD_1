@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meridian — The M1 Telescope</title>
+    <meta name="description" content="Meridian M1. A telescope built for people who look up.">
+
+    <!-- Google Fonts: Fraunces (display), Inter (body), Space Mono (data/utility) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!--SCROLL-DRIVEN BACKGROUND (fixed, behind everything)-->
+    <div class="sky" aria-hidden="true">
+        <div class="sky__blob sky__blob--a"></div>
+        <div class="sky__blob sky__blob--b"></div>
+        <div class="sky__blob sky__blob--c"></div>
+        <div class="sky__grain"></div>
+        <canvas class="sky__stars" id="starsCanvas"></canvas>
+    </div>
+
+    <!--APERTURE DIAL — signature element-->
+    <div class="dial" id="dial" aria-hidden="true">
+        <svg class="dial__ring" viewBox="0 0 120 120">
+            <circle class="dial__track" cx="60" cy="60" r="52" />
+            <g class="dial__ticks" id="dialTicks"></g>
+            <circle class="dial__aperture" cx="60" cy="60" r="20" />
+            <line class="dial__needle" id="dialNeedle" x1="60" y1="60" x2="60" y2="14" />
+        </svg>
+        <div class="dial__readout">
+            <span class="dial__label" id="dialLabel">DAWN</span>
+            <span class="dial__coord" id="dialCoord">RA 00h 00m</span>
+        </div>
+    </div>
+
+    <!--NAVIGATION-->
+    <header class="nav" id="nav">
+        <div class="nav__inner">
+            <a href="#home" class="nav__logo">
+                <span class="nav__logo-mark">◐</span> MERIDIAN
+            </a>
+
+            <nav class="nav__links" id="navLinks">
+                <a href="#home" class="nav__link active" data-section="home">Home</a>
+                <a href="#about" class="nav__link" data-section="about">About</a>
+                <a href="#instruments" class="nav__link" data-section="instruments">Instruments</a>
+                <a href="#observations" class="nav__link" data-section="observations">Field Notes</a>
+                <a href="#reserve" class="nav__link" data-section="reserve">Reserve</a>
+            </nav>
+
+            <button class="nav__cta-btn" id="navCta">Reserve the M1</button>
+
+            <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#home" class="mobile-menu__link" data-section="home">Home</a>
+            <a href="#about" class="mobile-menu__link" data-section="about">About</a>
+            <a href="#instruments" class="mobile-menu__link" data-section="instruments">Instruments</a>
+            <a href="#observations" class="mobile-menu__link" data-section="observations">Field Notes</a>
+            <a href="#reserve" class="mobile-menu__link" data-section="reserve">Reserve</a>
+            <button class="mobile-menu__cta">Reserve the M1</button>
+        </div>
+    </header>
+
+    <main>
+
+        <!--HERO-->
+        <section id="home" class="section hero">
+            <div class="hero__inner">
+                <div class="hero__copy reveal" data-reveal="up">
+                    <p class="eyebrow">FIRST LIGHT · SPRING 2027</p>
+                    <h1 class="hero__title">Look up.<br>Then look <em>closer</em>.</h1>
+                    <p class="hero__subtitle">
+                        Meridian M1 is a 130mm apochromatic telescope built from the ground up
+                        for backyards, balconies, and the twenty minutes of clear sky you get
+                        between clouds. No manuals. No hunting for polaris. Just aim and see.
+                    </p>
+                    <div class="hero__actions">
+                        <button class="btn btn--primary">Reserve the M1</button>
+                        <button class="btn btn--ghost">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M3 2L12 7L3 12V2Z" fill="currentColor" />
+                            </svg>
+                            Watch first light
+                        </button>
+                    </div>
+                    <div class="hero__stats">
+                        <div class="stat">
+                            <span class="stat__value">130mm</span>
+                            <span class="stat__label">Aperture</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat__value">910mm</span>
+                            <span class="stat__label">Focal length</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat__value">3.8kg</span>
+                            <span class="stat__label">Total weight</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero__visual reveal" data-reveal="scale">
+                    <div class="scope">
+                        <div class="scope__tube">
+                            <div class="scope__lens"></div>
+                            <div class="scope__ring scope__ring--1"></div>
+                            <div class="scope__ring scope__ring--2"></div>
+                        </div>
+                        <div class="scope__mount"></div>
+                        <div class="scope__base"></div>
+                    </div>
+                    <div class="scope__orbit"></div>
+                </div>
+            </div>
+            <div class="scroll-cue" aria-hidden="true"><span></span>Scroll to watch the sky change</div>
+        </section>
+
+        <!--  ABOUT -->
+        <section id="about" class="section about">
+            <div class="about__inner">
+                <div class="about__text reveal" data-reveal="left">
+                    <p class="eyebrow">ABOUT MERIDIAN</p>
+                    <h2 class="section-title">Built for people<br>who look up</h2>
+                    <p class="body-lg">
+                        We started Meridian after a decade of watching beautiful telescopes
+                        go back in their boxes, defeated by finder-scopes and star charts.
+                        The M1 strips that away. It's one optical tube, one mount, one
+                        job — turning a patch of dark sky into something you can actually see.
+                    </p>
+                    <p class="body-lg">
+                        Every M1 is collimated and star-tested by hand in our optics shop
+                        before it ships, then logged in a runbook that ships in the box
+                        with your unit's exact serial and test night.
+                    </p>
+                </div>
+
+                <div class="about__data reveal" data-reveal="right">
+                    <div class="data-card">
+                        <span class="data-card__k">DESIGNED</span>
+                        <span class="data-card__v">Tucson, AZ</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="data-card__k">OPTICAL DESIGN</span>
+                        <span class="data-card__v">Apochromatic triplet</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="data-card__k">FIRST LIGHT TESTED</span>
+                        <span class="data-card__v">Every unit, by hand</span>
+                    </div>
+                    <div class="data-card">
+                        <span class="data-card__k">LIMITING MAGNITUDE</span>
+                        <span class="data-card__v">13.4</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--INSTRUMENTS (services)-->
+        <section id="instruments" class="section instruments">
+            <div class="section-head reveal" data-reveal="up">
+                <p class="eyebrow">THE LINE-UP</p>
+                <h2 class="section-title">Three ways to<br>reach the sky</h2>
+            </div>
+
+            <div class="cards">
+                <article class="card reveal" data-reveal="up">
+                    <div class="card__icon" style="--card-accent: var(--c-aurora)">◐</div>
+                    <h3 class="card__title">M1 Compact</h3>
+                    <p class="card__desc">80mm, grab-and-go. Fits in a backpack, sets up in ninety seconds on the balcony.</p>
+                    <ul class="card__specs">
+                        <li><span>Aperture</span><span>80mm</span></li>
+                        <li><span>Weight</span><span>1.9kg</span></li>
+                        <li><span>Best for</span><span>Moon, planets</span></li>
+                    </ul>
+                    <p class="card__price">$449</p>
+                    <button class="btn btn--card">Reserve</button>
+                </article>
+
+                <article class="card card--featured reveal" data-reveal="up">
+                    <span class="card__badge">MOST RESERVED</span>
+                    <div class="card__icon" style="--card-accent: var(--c-ember)">◑</div>
+                    <h3 class="card__title">M1 Voyager</h3>
+                    <p class="card__desc">130mm apochromatic. The one we designed the company around.</p>
+                    <ul class="card__specs">
+                        <li><span>Aperture</span><span>130mm</span></li>
+                        <li><span>Weight</span><span>3.8kg</span></li>
+                        <li><span>Best for</span><span>Deep sky + planets</span></li>
+                    </ul>
+                    <p class="card__price">$1,290</p>
+                    <button class="btn btn--card btn--card-primary">Reserve</button>
+                </article>
+
+                <article class="card reveal" data-reveal="up">
+                    <div class="card__icon" style="--card-accent: var(--c-gold)">◒</div>
+                    <h3 class="card__title">M1 Pro</h3>
+                    <p class="card__desc">180mm with motorized tracking, for backyards you don't leave.</p>
+                    <ul class="card__specs">
+                        <li><span>Aperture</span><span>180mm</span></li>
+                        <li><span>Weight</span><span>7.1kg</span></li>
+                        <li><span>Best for</span><span>Astrophotography</span></li>
+                    </ul>
+                    <p class="card__price">$2,940</p>
+                    <button class="btn btn--card">Reserve</button>
+                </article>
+            </div>
+        </section>
+
+        <!--FIELD NOTES (portfolio / observations)-->
+        <section id="observations" class="section observations">
+            <div class="section-head reveal" data-reveal="up">
+                <p class="eyebrow">FIELD NOTES</p>
+                <h2 class="section-title">Logged through<br>the M1</h2>
+            </div>
+
+            <div class="log-grid">
+                <article class="log-card reveal" data-reveal="up">
+                    <div class="log-card__art log-card__art--moon">
+                        <div class="crater c1"></div>
+                        <div class="crater c2"></div>
+                        <div class="crater c3"></div>
+                    </div>
+                    <div class="log-card__meta">
+                        <h3>Terminator Line, Moon</h3>
+                        <p>The dividing edge between lunar day and night, where crater walls throw the longest shadows.</p>
+                        <span class="log-card__tag">42× · 11 MAY</span>
+                    </div>
+                </article>
+
+                <article class="log-card reveal" data-reveal="up">
+                    <div class="log-card__art log-card__art--saturn">
+                        <div class="ring"></div>
+                    </div>
+                    <div class="log-card__meta">
+                        <h3>Saturn's Rings</h3>
+                        <p>Cassini's division held steady all night — the kind of view that converts a skeptical neighbor.</p>
+                        <span class="log-card__tag">130× · 03 JUN</span>
+                    </div>
+                </article>
+
+                <article class="log-card reveal" data-reveal="up">
+                    <div class="log-card__art log-card__art--andromeda"></div>
+                    <div class="log-card__meta">
+                        <h3>Andromeda's Core</h3>
+                        <p>Two and a half million light-years away, and it still fills the eyepiece from a city rooftop.</p>
+                        <span class="log-card__tag">30× · 19 JUN</span>
+                    </div>
+                </article>
+
+                <article class="log-card reveal" data-reveal="up">
+                    <div class="log-card__art log-card__art--nebula"></div>
+                    <div class="log-card__meta">
+                        <h3>Orion Nebula</h3>
+                        <p>The trapezium's four stars, sharp as pinpricks, wrapped in a wisp we could still name a color.</p>
+                        <span class="log-card__tag">80× · 02 JUL</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!--RESERVE (contact)-->
+        <section id="reserve" class="section reserve">
+            <div class="reserve__inner reveal" data-reveal="up">
+                <p class="eyebrow">RESERVE YOURS</p>
+                <h2 class="section-title">The next batch<br>ships in spring</h2>
+                <p class="body-lg reserve__intro">
+                    Leave your email and we'll hold a spot in the production run —
+                    no payment now, just first refusal when your unit is ready to ship.
+                </p>
+
+                <form class="reserve-form" id="reserveForm">
+                    <div class="reserve-form__row">
+                        <div class="field">
+                            <label for="fName">Name</label>
+                            <input type="text" id="fName" name="name" placeholder="Ada Lovelace" required>
+                        </div>
+                        <div class="field">
+                            <label for="fEmail">Email</label>
+                            <input type="email" id="fEmail" name="email" placeholder="ada@skywatch.com" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="fModel">Which instrument?</label>
+                        <select id="fModel" name="model">
+                            <option>M1 Voyager — $1,290</option>
+                            <option>M1 Compact — $449</option>
+                            <option>M1 Pro — $2,940</option>
+                            <option>Not sure yet</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn--primary reserve-form__submit">Reserve my spot</button>
+                </form>
+
+                <p class="reserve__confirm" id="reserveConfirm" role="status">
+                    You're on the list. We'll email you before the run sells out.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="nav__logo footer__logo"><span class="nav__logo-mark">◐</span> MERIDIAN</span>
+            <p>Optics designed and tested in Tucson, Arizona.</p>
+            <div class="footer__links">
+                <a href="#home">Home</a>
+                <a href="#instruments">Instruments</a>
+                <a href="#observations">Field Notes</a>
+                <a href="#reserve">Reserve</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
